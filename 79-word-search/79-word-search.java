@@ -1,7 +1,5 @@
 class Solution {
-    char[][] boardCopy;
     public boolean exist(char[][] board, String word) {
-        boardCopy = board;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (backtrack(i, j, board, word, 0))
@@ -15,7 +13,7 @@ class Solution {
         if (word.length() <= posi)
             return true;
         
-        if (row < 0 || row == boardCopy.length || col < 0 || col == boardCopy[0].length || board[row][col] != word.charAt(posi))
+        if (row < 0 || row == board.length || col < 0 || col == board[0].length || board[row][col] != word.charAt(posi))
             return false;
         
         board[row][col] = '#';
