@@ -1,4 +1,4 @@
-name: Hello World Workflow
+name: Watch2 Workflow
 
 on:
   pull_request:
