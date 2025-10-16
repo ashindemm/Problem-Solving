@@ -1,0 +1,37 @@
+name: Notify Watchers
+
+on:
+  pull_request:
+    types: [closed, reopened, ready_for_review, labeled, unlabeled]
+
+jobs:
+  notify-watchers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract PR info
+        id: pr
+        run: |
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event.pull_request.merged }}" = "true" ]; then
+            echo "status=merged" >> $GITHUB_OUTPUT
+          else
+            echo "status=${{ github.event.pull_request.state }}" >> $GITHUB_OUTPUT
+
+      - name: Get watchers from PR comments
+        id: watchers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_number=${{ steps.pr.outputs.pr_number }}
+          echo "Fetching comments for PR #$pr_number"
+          curl -s -H "Authorization: token $GITHUB_TOKEN" \
+               "https://api.github.com/repos/${{ github.repository }}/issues/$pr_number/comments" \
+            | jq -r '.[] | select(.body | test("👀 testbot: Watching PR")) | .body' > comments.txt
+
+          echo "Found watchers:"
+          cat comments.txt
+
+          # Extract Slack IDs (from text like @slack_user_id=U12345678)
+          watchers=$(grep -o 'U[0-9A-Z]\+' comments.txt | sort -u | tr '\n' ',' | sed 's/,$//')
+          echo "watchers=$watchers" >> $GITHUB_OUTPUT
+          echo "Watchers: $watchers"
