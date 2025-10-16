@@ -1,0 +1,14 @@
+name: review Workflow
+
+on:
+  pull_request_review:
+    types: [edited, dismissed]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo Review - A review on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
