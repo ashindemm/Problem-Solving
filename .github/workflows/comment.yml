@@ -1,0 +1,12 @@
+name: Comment Workflow
+
+on: issue_comment
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo Workflow - A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
