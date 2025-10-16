@@ -1,6 +1,8 @@
 name: Comment Workflow
 
-on: issue_comment
+on:
+  issue_comment:
+    types: [created, deleted]
 
 jobs:
   say-hello:
