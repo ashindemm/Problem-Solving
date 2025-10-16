@@ -1,12 +1,10 @@
 name: Watch2 Workflow
 
-on:
-  pull_request:
-    types: [opened, reopened, closed]
+on: [push]
 
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
       - name: Print Hello Message
-        run: echo "Hello, World!"
+        run: echo "Hello, World2!"
