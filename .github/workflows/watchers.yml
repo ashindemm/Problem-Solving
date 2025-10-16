@@ -5,12 +5,19 @@ on:
     types: [closed, reopened]
 
 jobs:
-  notify-watchers:
+  say-hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract PR info
-        id: pr
-        run: echo "Testing workflow"
+      - name: Print Hello Message
+        run: echo "Hello, World!"
+
+# jobs:
+#   notify-watchers:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Extract PR info
+#         id: pr
+#         run: echo "Testing workflow"
 
       # - name: Get watchers from PR comments
       #   id: watchers
