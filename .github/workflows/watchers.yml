@@ -1,12 +1,12 @@
 name: Notify Watchers
 
 on:
-  pull_request:
-    types: [opened, closed, reopened]
+  pull_request_review:
+    types: [edited, dismissed]
 
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Print Hello Message
-        run: echo "Hello, World!"
+      - name: Review watcher
+        run: echo "Request review"
