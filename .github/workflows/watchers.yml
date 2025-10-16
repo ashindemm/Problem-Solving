@@ -1,8 +1,6 @@
 name: Notify Watchers
 
-on:
-  pull_request_review:
-    types: [edited, dismissed]
+on: pull_request_review
 
 jobs:
   say-hello:
