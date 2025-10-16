@@ -2,11 +2,17 @@ name: Notify Watchers
 
 on:
   pull_request:
-    types: [opened, reopened, closed]
+    types: [opened, reopened, closed, enqueued, dequeued]
 
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
       - name: PR watcher
-        run: echo "PR watched"
+        run: |
+          echo Workflow - Watching PR $NUMBER
+          echo Merged $TITLE - $STATUS
+        env:
+          NUMBER: ${{ github.event.issue.number }}
+          STATUS: ${{ github.event.pull_request.merged }}
+          TITLE: ${{ github.event.pull_request.title }}
